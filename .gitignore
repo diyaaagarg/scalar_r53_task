@@ -1,0 +1,12 @@
+.DS_Store
+.env
+backend/.venv/
+backend/.pytest_cache/
+backend/.ruff_cache/
+backend/__pycache__/
+backend/**/*.pyc
+backend/route53.db
+backend/test_route53.db
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local

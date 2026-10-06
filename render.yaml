@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: route53-console-api
+    runtime: docker
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: ROUTE53_DATABASE_URL
+        value: sqlite:////data/route53.db
+      - key: ROUTE53_SESSION_SECRET
+        generateValue: true
+      - key: ROUTE53_CORS_ORIGINS
+        sync: false
+      - key: ROUTE53_SECURE_COOKIES
+        value: "true"
+      - key: ROUTE53_COOKIE_SAMESITE
+        value: none
+    disk:
+      name: route53-data
+      mountPath: /data
+      sizeGB: 1

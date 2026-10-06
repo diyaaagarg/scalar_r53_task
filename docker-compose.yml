@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    environment:
+      ROUTE53_DATABASE_URL: sqlite:////data/route53.db
+      ROUTE53_SESSION_SECRET: ${ROUTE53_SESSION_SECRET:-local-development-secret-change-me}
+      ROUTE53_CORS_ORIGINS: http://localhost:3010
+      ROUTE53_SECURE_COOKIES: "false"
+      ROUTE53_COOKIE_SAMESITE: lax
+    ports:
+      - "8011:8011"
+    volumes:
+      - route53-data:/data
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8011/api/v1}
+    depends_on:
+      - backend
+    ports:
+      - "3010:3010"
+
+volumes:
+  route53-data:
